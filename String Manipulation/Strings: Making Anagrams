@@ -1,0 +1,37 @@
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <limits.h>
+#include <stdbool.h>
+
+int main(){
+    char* a = (char *)malloc(512000 * sizeof(char));
+    scanf("%s",a);
+    char* b = (char *)malloc(512000 * sizeof(char));
+    scanf("%s",b);
+
+    int ind1,ind2;
+    int arr1[26]={0};
+    int arr2[26]={0};
+    int count=0;
+    for(int i=0;i<strlen(a);i++)
+    {
+      ind1=a[i]-'a';
+      arr1[ind1]++;
+    }
+    for(int j=0;j<strlen(b);j++)
+    {
+        ind2=b[j]-'a';
+        arr2[ind2]++;
+    }
+    for(int i=0;i<26;i++)
+    {
+          
+     count+=abs(arr1[i]-arr2[i]);
+            
+    }
+    printf("%d",count);
+    return 0;
+}
