@@ -1,0 +1,50 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+struct Vertex {
+    int left, right;
+};
+
+typedef vector<Vertex> Vertices;
+
+void SwapNodes(Vertices &vs, int k, int root, int depth, bool &start) {
+    if (depth % k == 0) {
+        swap(vs[root].left, vs[root].right);
+    }
+
+    if (vs[root].left != -1) {
+        SwapNodes(vs, k, vs[root].left, depth + 1, start);
+    }
+
+    if (start) {
+        start = false;
+    } else {
+        cout << " ";
+    }
+    cout << root;
+
+    if (vs[root].right != -1) {
+        SwapNodes(vs, k, vs[root].right, depth + 1, start);
+    }
+}
+int main() {
+    size_t num_vertices;
+    cin >> num_vertices;
+    Vertices vertices(num_vertices + 1);
+    for (size_t v = 0; v < num_vertices; ++v) {
+        cin >> vertices[v + 1].left >> vertices[v + 1].right;
+    }
+    size_t num_tests;
+    cin >> num_tests;
+    for (size_t t = 0; t < num_tests; ++t) {
+        int k;
+        cin >> k;
+        bool start = true;
+        SwapNodes(vertices, k, 1, 1, start);
+        cout << "\n";
+    }
+    return 0;
+}
