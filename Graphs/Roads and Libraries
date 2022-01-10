@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> p;
+int f(int a){return p[a]==a?a:p[a]=f(p[a]);}
+void u(int a, int b){p[f(a)] = f(b);}
+signed main()
+{
+    int T;cin >> T;while(T--){
+        int N, M, a, b;
+        long long c, d;
+        cin >> N >> M >> c >> d;
+        p.clear();p.resize(N);
+        iota(p.begin(), p.end(), 0);
+        while(M--){
+            cin >> a >> b;
+            --a, --b;
+            u(a, b);
+        }
+        int comp=0;
+        for(int i=0;i<N;++i){
+            if(p[i]==i)++comp;
+        }
+        cout << (comp*c+(N-comp)*min(c, d)) << "\n";
+    }
+
+    return 0;
+}
