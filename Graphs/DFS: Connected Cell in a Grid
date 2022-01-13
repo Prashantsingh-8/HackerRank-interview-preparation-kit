@@ -1,0 +1,58 @@
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <limits.h>
+#include <stdbool.h>
+int max=0,count=1;
+int a[]={-1,-1,-1,0,0,1,1,1};
+int b[]={-1,0,1,-1,1,-1,0,1};
+int safe(int r,int c,int row,int col,int g[][10],int v[][10])
+    {
+    if(r>=0 && r<row && c>=0 && c<col && g[r][c] && !v[r][c])
+        return 1;
+    return 0;
+}
+void dfs(int grid[][10],int visited[][10],int r,int c,int row,int col)
+    {
+    int i;
+    visited[r][c]=1;
+    for(i=0;i<8;i++)
+        {
+        if(safe(r+a[i],c+b[i],row,col,grid,visited))
+        {
+            count++;
+            dfs(grid,visited,r+a[i],c+b[i],row,col);
+            
+        }
+    }
+    if(count>max)
+        max=count;
+}
+int main(){
+    int n,visited[10][10],i,j,c=1; 
+    scanf("%d",&n);
+    int m; 
+    scanf("%d",&m);
+    int grid[10][10];
+    for(int grid_i = 0; grid_i < n; grid_i++){
+       for(int grid_j = 0; grid_j < m; grid_j++){
+          visited[grid_i][grid_j]=0;
+          scanf("%d",&grid[grid_i][grid_j]);
+       }
+    }
+    for(i=0;i<n;i++)
+        {
+        for(j=0;j<m;j++)
+            {
+            if(grid[i][j]==1 && !visited[i][j])
+            {
+                dfs(grid,visited,i,j,n,m);
+                count=1;
+            }
+        }
+    }
+    printf("%d",max);
+    return 0;
+}
